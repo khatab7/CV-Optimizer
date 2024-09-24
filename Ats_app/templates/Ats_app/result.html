@@ -1,0 +1,48 @@
+<!-- Ats_app/templates/Ats_app/result.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Analysis Result</h1>
+
+        <div class="mt-4">
+            {% if result %}
+                <div class="alert alert-success">
+                    <h2>Result:</h2>
+                    <div>
+                        <pre>{{ result|json_script:"result-data" }}</pre>
+                        <script>
+                            const resultData = JSON.parse(document.getElementById('result-data').textContent);
+                            document.write("<strong>JD Match:</strong> " + resultData["JD Match"] + "%<br>");
+                            document.write("<strong>Missing Keywords:</strong> " + resultData["MissingKeywords"].join(", ") + "<br>");
+                            document.write("<strong>Profile Summary:</strong> " + resultData["Profile Summary"]);
+                        </script>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if error %}
+                <div class="alert alert-danger">
+                    <h2>Error:</h2>
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'analyze_cv' %}" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
