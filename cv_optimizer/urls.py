@@ -22,6 +22,6 @@ from CV_app.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('CV_app.urls')),  # Include CV_app URLs
-    path('ats/', include('Ats_app.urls')),  # Include Ats_app URLs
+    path('ats/', include('Ats_app.urls', namespace='ats')),  # Include Ats_app URLs
 ]
 

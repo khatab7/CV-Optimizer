@@ -1,8 +1,32 @@
-{% extends 'base.html' %}
+
+{% extends 'CV_app/base.html' %}
+
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h1 class="text-center">Dashboard</h1>
-<a href="{% url 'create_cv' %}" class="btn btn-primary">Create CV</a>
-<a href="{% url 'ats:analyze_cv' %}" class="btn btn-secondary">Analyze CV</a>
+<div class="container mt-5">
+    <h1 class="text-center">Dashboard</h1>
+    <div class="text-center">
+        <a href="{% url 'create_cv' %}" class="btn btn-primary">Create CV</a>
+        <a href="{% url 'ats:analyze_cv' %}" class="btn btn-secondary">Analyze CV</a>
+    </div>
+
+    <h2 class="mt-5">Your CVs</h2>
+    {% if user.cv_set.count > 0 %}
+        <ul class="list-group">
+            {% for cv in user.cv_set.all %}
+                <li class="list-group-item">
+                    <strong>{{ cv.name }}</strong><br>
+                    Email: {{ cv.email }}<br>
+                    Phone: {{ cv.phone }}<br>
+                    Skills: {{ cv.skills|truncatewords:10 }}<br>
+                    <a href="{% url 'ats:analyze_cv' %}?cv_id={{ cv.id }}" class="btn btn-link">Analyze this CV</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not created any CVs yet. Start by creating one!</p>
+    {% endif %}
+</div>
 {% endblock %}
+
