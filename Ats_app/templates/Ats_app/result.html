@@ -1,5 +1,3 @@
-<!-- Ats_app/templates/Ats_app/result.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,22 +7,38 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'dashboard' %}">CV App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ats:analyze_cv' %}">ATS App</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
     <div class="container mt-5">
         <h1 class="text-center">Analysis Result</h1>
-
         <div class="mt-4">
             {% if result %}
                 <div class="alert alert-success">
                     <h2>Result:</h2>
-                    <div>
-                        <pre>{{ result|json_script:"result-data" }}</pre>
-                        <script>
-                            const resultData = JSON.parse(document.getElementById('result-data').textContent);
-                            document.write("<strong>JD Match:</strong> " + resultData["JD Match"] + "%<br>");
-                            document.write("<strong>Missing Keywords:</strong> " + resultData["MissingKeywords"].join(", ") + "<br>");
-                            document.write("<strong>Profile Summary:</strong> " + resultData["Profile Summary"]);
-                        </script>
-                    </div>
+                    <strong>JD Match:</strong> {{ result.JD_Match }}%<br>
+                    <strong>Missing Keywords:</strong> {{ result.MissingKeywords|join:", " }}<br>
+                    <strong>Profile Summary:</strong> {{ result.Profile_Summary }}
                 </div>
             {% endif %}
 
@@ -37,12 +51,17 @@
         </div>
 
         <div class="text-center mt-4">
-            <a href="{% url 'analyze_cv' %}" class="btn btn-secondary">Back</a>
+            <a href="{% url 'ats:analyze_cv' %}" class="btn btn-secondary">Back</a>
         </div>
     </div>
+
+    <footer class="text-center mt-5">
+        <p>&copy; {{ current_year }} CV Optimizer. All rights reserved.</p>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

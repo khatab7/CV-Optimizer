@@ -4,5 +4,9 @@
 {% block content %}
 <h2>Welcome to the CV Optimizer!</h2>
 <p>Create, manage, and analyze your CVs to stand out in the job market.</p>
-<a href="{% url 'login' %}" class="btn btn-primary">Get Started</a>
+{% if user.is_authenticated %}
+    <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+{% else %}
+    <a href="{% url 'login' %}" class="btn btn-primary">Get Started</a>
+{% endif %}
 {% endblock %}

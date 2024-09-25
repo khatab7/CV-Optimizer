@@ -8,7 +8,7 @@ class CV(models.Model):
     phone = models.CharField(max_length=15)
     skills = models.TextField()
     experience = models.TextField()
-    education = models.TextField()
+    education = models.TextField()    
 
     def __str__(self):
         return self.name

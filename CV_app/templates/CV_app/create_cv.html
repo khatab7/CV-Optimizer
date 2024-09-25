@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create CV</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1 class="text-center">Create Your CV</h1>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form.as_p }}
-            </div>
-            <button type="submit" class="btn btn-primary">Save CV</button>
-        </form>
-    </div>
-</body>
-</html>
+{% extends 'CV_app/base.html' %}
+
+{% block title %}Create CV{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Create Your CV</h1>
+    <form method="post" enctype="multipart/form-data">  <!-- Ensure enctype is set for file uploads -->
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Save CV</button>
+    </form>
+</div>
+{% endblock %}
+

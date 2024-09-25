@@ -55,7 +55,7 @@ def analyze_cv(request):
 
             # Extract text from CV
             cv_text = extract_text_from_pdf(cv_file)
-            #print(cv_text)
+            
             # Prepare the prompt for the AI model
             input_prompt = f"""
             Hey Act Like a skilled or very experienced ATS (Applicant Tracking System)
@@ -69,12 +69,13 @@ def analyze_cv(request):
             Description: {job_description}
 
             I want the response in one single string having the structure:
-            {{ "JD Match": "%", "MissingKeywords": [], "Profile Summary": "" }}
+            {{ "JD_Match": "%", "MissingKeywords": [], "Profile_Summary": "" }}
             """
 
             # Get response from the AI model
             response_text = get_gemini_response(input_prompt)
             print("Response Text:", response_text)
+            
             # Parse the response
             try:
                 response_json = json.loads(response_text)
